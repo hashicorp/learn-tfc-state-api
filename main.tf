@@ -5,7 +5,15 @@ terraform {
       version = ">= 3.24.1"
     }
   }
-  required_version = "~> 0.14"
+  required_version = "~> 0.15"
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "hashicorp-rachel"
+
+    workspaces {
+      name = "state-versioning1"
+    }
+  }
 }
 
 
@@ -33,7 +41,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "example" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.sg_8080.id]
+  vpc_security_group_ids = [aws_security_group.sg_web.id]
   user_data              = <<-EOF
               #!/bin/bash
               echo "Hello, World" > index.html
@@ -44,18 +52,18 @@ resource "aws_instance" "example" {
   }
 }
 
-resource "aws_security_group" "sg_8080" {
-  name        = "sg_8080"
+resource "aws_security_group" "sg_web" {
+  name        = "sg_web-rachel"
   description = "allow 8080"
 }
 
-resource "aws_security_group_rule" "sg_8080" {
+resource "aws_security_group_rule" "sg_web" {
   type              = "ingress"
   to_port           = "8080"
   from_port         = "8080"
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.sg_8080.id
+  security_group_id = aws_security_group.sg_web.id
   lifecycle {
     create_before_destroy = true
   }
