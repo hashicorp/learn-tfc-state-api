@@ -8,10 +8,10 @@ terraform {
   required_version = "~> 0.15"
   backend "remote" {
     hostname     = "app.terraform.io"
-    organization = "hashicorp-rachel"
+    organization = "<YOUR-ORGANIZATION-NAME>"
 
     workspaces {
-      name = "state-versioning1"
+      name = "state-versioning"
     }
   }
 }
