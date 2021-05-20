@@ -53,7 +53,7 @@ resource "aws_instance" "example" {
 }
 
 resource "aws_security_group" "sg_web" {
-  name        = "sg_web-rachel"
+  name        = "sg_web"
   description = "allow 8080"
 }
 
