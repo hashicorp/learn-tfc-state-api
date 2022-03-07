@@ -56,7 +56,7 @@ resource "aws_instance" "example" {
 resource "aws_security_group" "sg_web" {
   name        = "sg_web"
   description = "allow 8080"
-  // required to update apt-get
+  // connectivity to ubuntu mirrors is required to run `apt-get update` and `apt-get install apache2`
   egress {
     from_port   = 0
     to_port     = 0
