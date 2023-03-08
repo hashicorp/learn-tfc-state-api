@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 
 serial=$(cat state.tfstate | jq '.serial')
 md5_compute=$(md5 -q state.tfstate)
